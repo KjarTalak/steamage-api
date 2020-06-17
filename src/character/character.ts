@@ -1,6 +1,3 @@
-import StringValidator from '../helpers/StringValidator';
-import NumberValidator from '../helpers/NumberValidator';
-
 export default interface Character
 {
     owner: string;
