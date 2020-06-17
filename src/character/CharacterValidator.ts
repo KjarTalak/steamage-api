@@ -67,6 +67,12 @@ export default class CharacterValidator
             this.errors.push(testSkill.errors);
         }
 
+        for(let specialization in this.character.specializations)
+        {
+            let testSpecialization = new NumberValidator(this.character, "skills", specialization).Min(1).Max(6);
+            this.errors.push(testSpecialization.errors);
+        }
+
         this.errors = this.errors.reduce((acc, cur) => acc.concat(cur), []);
     }
 
@@ -87,18 +93,22 @@ export default class CharacterValidator
 
         let skills = this.character.skills;
         let skillPoints = 0;
-        
+
         for(let skill in skills)
         {
             skillPoints += skills[skill];
+        }
+
+        let specializations = this.character.specializations;
+        for(let specialization in specializations)
+        {
+            skillPoints += specializations[specialization];
         }
         
         let skillValidator = new NumberValidator(skillPoints).OverridePaths("skills", "spent-points").Equal(race.skillPoints);
         this.warnings.push(skillValidator.errors);
 
         this.warnings = this.warnings.reduce((acc, cur) => acc.concat(cur), []);
-
-        console.log(this.warnings);
     }
 
     Errors(): any[]
