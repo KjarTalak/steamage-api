@@ -1,0 +1,10 @@
+{
+    "id": "chimera"
+    ,"attributePoints": 8
+    ,"weaknesses":
+    [
+        "knowledge"
+        ,"willpower"
+    ]
+    ,"skillPoints": 12
+}

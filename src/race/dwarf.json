@@ -1,0 +1,9 @@
+{
+    "id": "dwarf"
+    ,"attributePoints": 7
+    ,"weaknesses":
+    [
+        "charisma"
+    ]
+    ,"skillPoints": 12
+}

@@ -1,0 +1,9 @@
+{
+    "id": "elf"
+    ,"attributePoints": 7
+    ,"weaknesses":
+    [
+        "strength"
+    ]
+    ,"skillPoints": 12
+}
