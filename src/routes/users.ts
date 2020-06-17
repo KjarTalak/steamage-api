@@ -1,9 +1,11 @@
 import { Router } from 'express';
 
+import CharacterValidator from '../character/CharacterValidator';
+
 import { userDb, characterDb } from '../databases';
 
 import { User } from '../user';
-import { Character, ValidateCharacter } from '../character';
+import Character from '../character/character';
 
 const router = Router();
 
@@ -83,11 +85,11 @@ router.post('/:userId/characters', function(req, res)
     const newCharacter = req.body as Character;
     newCharacter.owner = owner;
 
-    const errors = ValidateCharacter(newCharacter);
+    let validator = new CharacterValidator(newCharacter);
 
-    if(errors.length > 0)
+    if(validator.HasErrors())
     {
-        res.status(400).send(errors);
+        res.status(400).send(validator.errors);
         return;
     }
 
@@ -106,7 +108,11 @@ router.post('/:userId/characters', function(req, res)
         })
     .then(character =>
         {
-            res.status(201).send(character);
+            res.status(201).send(
+                {
+                    character: character,
+                    warnings: validator.Warnings()
+                });
         })
     .catch(err =>
         {
@@ -123,18 +129,22 @@ router.put('/:userId/characters/:characterId', function(req, res)
     const newCharacter = req.body as Character;
     newCharacter.owner = userId;
 
-    const errors = ValidateCharacter(newCharacter);
+    let validator = new CharacterValidator(newCharacter);
 
-    if(errors.length > 0)
+    if(validator.HasErrors())
     {
-        res.status(400).send(errors);
+        res.status(400).send(validator.Errors());
         return;
     }
 
     characterDb.update({owner: userId, _id: characterId}, newCharacter)
     .then(numberReplaced =>
         {
-            res.status(200).send();
+            res.status(200).send(
+                {
+                    character: newCharacter,
+                    warnings: validator.Warnings()
+                });
         })
     .catch(err =>
         {

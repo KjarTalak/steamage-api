@@ -8,7 +8,7 @@ if(!fs.existsSync('./databases/'))
 import Database from './Database';
 
 import { User } from 'user';
-import { Character } from 'character';
+import Character from 'character/character';
 
 const userDb = new Database<User>('./databases/users.db');
 const characterDb = new Database<Character>('./databases/characters.db');

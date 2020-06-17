@@ -35,6 +35,12 @@ export default abstract class Validator<T> implements IValidator<Validator<T>>
         return this;
     }
 
+    OverridePaths(...paths: string[])
+    {
+        this.paths = paths;
+        return this;
+    }
+
     Length(len: number)
     {
         return this;
@@ -63,6 +69,6 @@ export default abstract class Validator<T> implements IValidator<Validator<T>>
             constraint: constraint,
             expected: expected,
             actual: actual
-        })
+        });
     }
 }
